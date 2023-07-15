@@ -1,10 +1,12 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
+import searchView from './views/searchView.js';
 
 
 import 'core-js/stable';//polyfilling everything else
 import 'regenerator-runtime/runtime';//polyfilling async await
-const recipeContainer = document.querySelector('.recipe');
+import searchView from './views/searchView.js';
+// const recipeContainer = document.querySelector('.recipe');
 
 
 
@@ -42,6 +44,28 @@ const controlRecipes=async function()
     recipeView.renderError();
   }
 };
+
+const controlSearchResults=async function()
+{
+
+  try{
+    //1)get search query
+    const query=searchView.getQuery();
+    if(!query) return;
+    
+
+    //2)load search results
+    await model.loadSearchResults(query);//this fxn does not return anything but just manipulates state
+
+    //3)render results
+    console.log(model.state.search.results);
+  }
+  catch(err)
+  {
+    console.log(err);
+  }
+};
+
 // controlRecipes();
 
 
@@ -51,5 +75,6 @@ const controlRecipes=async function()
 const init=function()
 {
   recipeView.addHandlerRender(controlRecipes);
+  searchView.addHandlerSearch(controlSearchResults);
 }
 init();
