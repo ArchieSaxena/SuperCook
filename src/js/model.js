@@ -1,6 +1,7 @@
 export {async} from 'regenerator-runtime';
 import {API_URL} from './config.js';
 import {getJSON} from './helpers.js';
+import recipeView from './views/recipeView.js';
 
 export const state={
     recipe:{},
@@ -29,6 +30,8 @@ export const loadRecipe=async function(id) //fetching data from supercook api
     }
     catch(err)
     {
+        //we need to display the error not in the console
         console.error(`err`);
+        throw err;
     }
 }

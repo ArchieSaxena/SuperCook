@@ -38,7 +38,8 @@ const controlRecipes=async function()
   }
   catch(err)
   {
-    alert(err);
+    // alert(err);
+    recipeView.renderError();
   }
 };
 // controlRecipes();
