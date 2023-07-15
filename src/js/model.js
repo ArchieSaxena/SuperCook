@@ -1,4 +1,6 @@
 export {async} from 'regenerator-runtime';
+import {API_URL} from './config.js';
+import {getJSON} from './helpers.js';
 
 export const state={
     recipe:{},
@@ -7,14 +9,10 @@ export const state={
 export const loadRecipe=async function(id) //fetching data from supercook api
 {
     try{
-        const res=await fetch('https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886');
-    const data=await res.json();  
-
-
-    if(!res.ok)
-    {
-        throw new Error(`${data.message} (${res.status})`);
-    }
+        // const res = await fetch(
+        //     `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
+        //   );
+        const data=await getJSON(`${API_URL}${id}`);
     // console.log(res,data);
     let {recipe}=data.data;
     state.recipe={
@@ -31,6 +29,6 @@ export const loadRecipe=async function(id) //fetching data from supercook api
     }
     catch(err)
     {
-        alert(err);
+        console.error(`err`);
     }
 }
