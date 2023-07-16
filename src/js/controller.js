@@ -2,6 +2,7 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 
 
 import 'core-js/stable';//polyfilling everything else
@@ -66,7 +67,11 @@ const controlSearchResults=async function()
     //3)render search results
     // console.log(model.state.search.results);
     // resultsView.render(model.state.search.results);//all results are rendered over here
-    resultsView.render(model.getSearchResultPage());
+    resultsView.render(model.getSearchResultPage(2));
+
+
+    //Render the initial pagination button
+    paginationView.render(model.state.search)
   }
   catch(err)
   {
@@ -80,9 +85,20 @@ const controlSearchResults=async function()
 // window.addEventListener('haschange',controlRecipes);
 // window.addEventListener('load',controlRecipes)
 
+const controlPagination=function(gotoPage)//only when page is clicked
+{
+  console.log(gotoPage);
+    //render new search results
+    resultsView.render(model.getSearchResultPage(gotoPage));
+
+
+    //Render the new pagination button
+    paginationView.render(model.state.search)
+}
 const init=function()
 {
   recipeView.addHandlerRender(controlRecipes);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 }
 init();
