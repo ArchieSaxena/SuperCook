@@ -9,10 +9,10 @@ import 'regenerator-runtime/runtime';//polyfilling async await
 import {async} from 'regenerator-runtime';
 // const recipeContainer = document.querySelector('.recipe');
 
-if(module.hot)
-{
-  module.hot.accept();
-}
+// if(module.hot)
+// {
+//   module.hot.accept();
+// }
 
 // https://forkify-api.herokuapp.com/v2
 
@@ -63,9 +63,10 @@ const controlSearchResults=async function()
     //2)load search results
     await model.loadSearchResults(query);//this fxn does not return anything but just manipulates state
 
-    //3)render results
+    //3)render search results
     // console.log(model.state.search.results);
-    resultsView.render(model.state.search.results);
+    // resultsView.render(model.state.search.results);//all results are rendered over here
+    resultsView.render(model.getSearchResultPage());
   }
   catch(err)
   {

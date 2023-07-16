@@ -22,7 +22,7 @@ class RecipeView extends View{
         <div class="recipe__details">
         <div class="recipe__info">
             <svg class="recipe__info-icon">
-            <use href="src/img/icons.svg_icon-clock"></use>
+            <use href="src/img/icons.svg#icon-clock"></use>
             </svg>
             <span class="recipe__info-data recipe__info-data--minutes">${this._data.cookingTime}</span>
             <span class="recipe__info-text">minutes</span>
@@ -47,6 +47,9 @@ class RecipeView extends View{
             </div>
         </div>
         <div class="recipe__user-generated">
+            <svg>
+            <use href="${icons}#icon-user"></use>
+            </svg>
         </div>
         <button class="btn--round">
             <svg class="">
@@ -83,7 +86,7 @@ class RecipeView extends View{
         _generateMarkupIngredients(ing) {
             return ` <li class="recipe__ingredient">
                 <svg class="recipe__icon">
-                  <use href="${icons}_icon-check"></use>
+                  <use href="${icons}#icon-check"></use>
                 </svg>
                 <div class="recipe__quantity">${
                   ing.quantity ? new Fraction(ing.quantity).toString() : ''
