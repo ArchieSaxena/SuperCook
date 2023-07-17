@@ -34,7 +34,8 @@ const controlRecipes=async function()
     // recipeView.renderSpinner();
     //loading recipe
 
-    resultsView.render(model.getSearchResultPage());
+    resultsView.update(model.getSearchResultPage());
+    bookmarksView.update(model.state.bookmarks);
 
     await model.loadRecipe(id)//it will return promise so will need to await //recipe loaded here and will be stored inside state
     const {recipe}=model.state;
@@ -44,6 +45,7 @@ const controlRecipes=async function()
     
     //rendering recipe
     recipeView.render(model.state.recipe)
+    
 
     // controlServings();
     
@@ -128,8 +130,14 @@ const controlAddBookmark=function()
   //3)Render Bookmark
   bookmarksView.render(model.state.bookmarks);
 }
+
+const controlBookmarks=function()
+{
+  bookmarksView.render(model.state.bookmarks);
+}
 const init=function()
 {
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
