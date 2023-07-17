@@ -32,7 +32,7 @@ export default class View{
             console.log(curEl,newEl.isEqualNode(curEl));
 
             //Updates Changed Attributes
-            if(!newEl.isEqualNode(curEl) && newEl.firstChild.nodeValue.trim()!='')//to check for test we use nodevalue
+            if(!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim()!='')//to check for test we use nodevalue
             {
                 console.log(newEl.firstChild?.nodeValue.trim());
                 curEl.textContent=newEl.textContent;
