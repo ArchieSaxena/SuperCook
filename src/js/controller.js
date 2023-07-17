@@ -32,12 +32,15 @@ const controlRecipes=async function()
 
     // recipeView.renderSpinner();
     //loading recipe
+
+    resultsView.render(model.getSearchResultPage());
+
     await model.loadRecipe(id)//it will return promise so will need to await //recipe loaded here and will be stored inside state
     const {recipe}=model.state;
     
      //loading animation 
 
-
+    
     //rendering recipe
     recipeView.render(model.state.recipe)
 
@@ -69,7 +72,7 @@ const controlSearchResults=async function()
     //3)render search results
     // console.log(model.state.search.results);
     // resultsView.render(model.state.search.results);//all results are rendered over here
-    resultsView.render(model.getSearchResultPage(2));
+    resultsView.render(model.getSearchResultPage());
 
 
     //Render the initial pagination button
@@ -106,8 +109,9 @@ const controlServings=function(newServings)
   //Update the recipe Servings in the state
   model.updateServings(newServings);  
 
-  recipeView.render(model.state.recipe)
+  // recipeView.render(model.state.recipe);
   //Update the view as well that will be seen to user(RecipeView)
+  recipeView.update(model.state.recipe);
 }
 const init=function()
 {
