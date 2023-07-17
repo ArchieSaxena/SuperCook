@@ -40,6 +40,8 @@ const controlRecipes=async function()
 
     //rendering recipe
     recipeView.render(model.state.recipe)
+
+    // controlServings();
     
     
   }
@@ -71,12 +73,15 @@ const controlSearchResults=async function()
 
 
     //Render the initial pagination button
-    paginationView.render(model.state.search)
+    paginationView.render(model.state.search);
+
+    
   }
   catch(err)
   {
     console.log(err);
   }
+
 };
 
 // controlRecipes();
@@ -95,10 +100,22 @@ const controlPagination=function(gotoPage)//only when page is clicked
     //Render the new pagination button
     paginationView.render(model.state.search)
 }
+
+const controlServings=function(newServings)
+{
+  //Update the recipe Servings in the state
+  model.updateServings(newServings);  
+
+  recipeView.render(model.state.recipe)
+  //Update the view as well that will be seen to user(RecipeView)
+}
 const init=function()
 {
   recipeView.addHandlerRender(controlRecipes);
+  recipeView.addHandlerUpdateServings(controlServings);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+
+  
 }
 init();
