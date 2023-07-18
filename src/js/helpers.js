@@ -9,32 +9,36 @@ const timeout = function (s) {
   });
 };
 
-export const getJSON = async function (url) {
-  try {
-    const fetchpro = fetch(url);
-    const res = await Promise.race([fetchpro, timeout(TIME_OUT)]); // if the timeout wins then we will throw the error
-    const data = await res.json(); //coverting body to json
-    if (!res.ok) throw new Error(`${data.message} , ${res.success}`);
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
+// export const getJSON = async function (url) {
+//   try {
+//     const fetchpro = fetch(url);
+//     const res = await Promise.race([fetchpro, timeout(TIME_OUT)]); // if the timeout wins then we will throw the error
+//     const data = await res.json(); //coverting body to json
+//     if (!res.ok) throw new Error(`${data.message} , ${res.success}`);
+//     return data;
+//   } catch (err) {
+//     throw err;
+//   }
+// };
 
-export const sendJSON = async function (url,uploadData) {
-  try {
-    const fetchpro =fetch(url,{
+export const AJAX=async function(url,uploadData=undefined)
+{
+  try{
+    const fetchPro=uploadData?fetch(url,{
       method:'POST',
       headers:{
         'Content-Type':'application/json'
       },
       body:JSON.stringify(uploadData),
-    });
-    const res = await Promise.race([fetchpro, timeout(TIME_OUT)]); // if the timeout wins then we will throw the error
-    const data = await res.json(); //coverting body to json
-    if (!res.ok) throw new Error(`${data.message} , ${res.success}`);
-    return data;
-  } catch (err) {
-    throw err;
-  }
-};
+    }):fetch(url);
+  
+      const res = await Promise.race([fetchPro, timeout(TIME_OUT)]); // if the timeout wins then we will throw the error
+        const data = await res.json(); //coverting body to json
+        if (!res.ok) throw new Error(`${data.message} , ${res.success}`);
+        return data;
+      } 
+  
+    catch (err) {
+      throw err;
+    }
+}

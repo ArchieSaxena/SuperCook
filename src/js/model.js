@@ -1,6 +1,6 @@
 export {async} from 'regenerator-runtime';
 import {API_URL,TIME_OUT,RES_PER_PAGE,KEY} from './config.js';
-import {getJSON,sendJSON} from './helpers.js';
+import {AJAX} from './helpers.js';
 import recipeView from './views/recipeView.js';
 
 export const state={
@@ -35,12 +35,12 @@ export const loadRecipe=async function(id) //fetching data from supercook api
         // const res = await fetch(
         //     `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
         //   );
-        const data=await getJSON(`${API_URL}${id}`);
+        const data=await AJAX(`${API_URL}${id}?key=${KEY}` );
     // console.log(res,data);
     state.recipe=createRecipeObject(data);
     if(state.bookmarks.some(bookmark=>bookmark.id===id))
     {
-        state.recipe.bookmarkes=true; 
+        state.recipe.bookmarked=true; 
     }
     else{
         state.recipe.bookmarked=false;
@@ -60,7 +60,7 @@ export const loadSearchResults=async function(query)
     try{
         //fetch api and convert into json
         state.search.query=query;
-        const data=await getJSON(`${API_URL}?search=${query}`);
+        const data=await AJAX(`${API_URL}?search=${query}&key=${KEY}`);
         console.log(data);
 
         state.search.results=data.data.recipes.map(rec=>{
@@ -69,6 +69,7 @@ export const loadSearchResults=async function(query)
                 title:rec.title,
                 publisher:rec.publisher,
                 image:rec.image_url,
+                ...(rec.key && {key:rec.key}),
             };
         });
         state.search.page=1;
@@ -172,7 +173,7 @@ export const uploadRecipe=async function(newRecipe)
             ingredients,
         }
         console.log(recipe);
-        const data = await sendJSON(`${API_URL}?key=${KEY}`, recipe);
+        const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
         console.log(data);
         state.recipe=createRecipeObject(data);
         addBookmark(state.recipe);

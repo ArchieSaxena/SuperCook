@@ -142,6 +142,7 @@ const controlAddRecipe=async function(newRecipe)
 {
   try
   {
+    addRecipeView.renderSpinner();
     console.log(newRecipe);
 
     await model.uploadRecipe(newRecipe);
@@ -149,7 +150,16 @@ const controlAddRecipe=async function(newRecipe)
 
     //render recipe
     recipeView.render(model.state.recipe);
+    //show message
     addRecipeView.renderMessage();
+
+    //render bookmarks 
+    bookmarksView.render(model.state.bookmarks);
+
+    //change id in the URL
+    window.history.pushState(null,'',`#${model.state.recipe.id}`);
+    window.history.back();
+
     //close form window
     setTimeout(function(){
       addRecipeView.toggleWindow()},MODAL_CLOSE_SEC*1000)
