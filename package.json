@@ -2,10 +2,10 @@
   "name": "supercook",
   "version": "1.0.0",
   "description": "Recipe App",
-  "main": "src/js/controller.js",
+  "default": "src/js/controller.js",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "author": "Archie Saxena",
   "license": "ISC",
@@ -14,5 +14,10 @@
     "parcel": "^2.0.0-beta.1",
     "process": "^0.11.10",
     "sass": "^1.26.10"
+  },
+  "dependencies": {
+    "core-js": "^3.31.1",
+    "fracty": "^1.0.11",
+    "regenerator-runtime": "^0.13.11"
   }
 }
